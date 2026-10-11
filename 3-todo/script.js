@@ -27,7 +27,7 @@ function addTask() {
 
 function toggleTask(id) {
   const task = tasks.find((t) => t.id === id);
-  task.done = !task.true;
+  task.done = !task.done;
   render();
 }
 
@@ -42,11 +42,16 @@ function clearCompleted() {
 }
 
 function getVisibleTasks() {
+  if (currentFilter === "active") {
+    return tasks.filter((t) => !t.done);
+  }
+  if (currentFilter === "done") return tasks.filter((t) => t.done);
   return tasks;
 }
 
 function updateCounter() {
-  counter.textContent = "Активных задач: " + tasks.length;
+  const activeCount = tasks.filter((t) => !t.done).length;
+  counter.textContent = "Активных задач: " + activeCount;
 }
 
 function render() {
