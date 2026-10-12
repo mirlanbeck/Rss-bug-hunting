@@ -29,7 +29,7 @@ function getFiltered() {
   }
 
   if (category !== "all") {
-    result = products.filter((p) => p.category === category);
+    result = result.filter((p) => p.category === category);
   }
 
   if (sort === "asc") {
@@ -59,6 +59,9 @@ sortSelect.addEventListener("change", render);
 
 resetBtn.addEventListener("click", () => {
   searchInput.value = "";
+  categorySelect.value = "all";
+  sortSelect.value = "default";
+  render();
 });
 
 render();
