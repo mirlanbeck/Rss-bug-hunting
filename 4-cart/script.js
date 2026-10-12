@@ -70,14 +70,17 @@ function removeItem(id) {
 }
 
 function applyPromo() {
-  if ((promoInput.value = "SALE10")) {
+  if (promoInput.value.trim() === "SALE10") {
     discount = 0.1;
+  } else {
+    discount = 0;
   }
   renderCart();
 }
 
 function clearCart() {
-  cart.splice(0, 1);
+  cart.splice(0);
+  discount = 0;
   renderCart();
 }
 
@@ -110,7 +113,7 @@ function renderCart() {
   });
 
   if (discount) {
-    total = total - total * discount;
+    total = Math.round(total * (1 - discount));
   }
 
   badgeEl.textContent = itemTotal;
@@ -120,6 +123,10 @@ function renderCart() {
 
 promoBtn.addEventListener("click", applyPromo);
 clearBtn.addEventListener("click", clearCart);
+promoInput.addEventListener("input", () => {
+  discount = 0;
+  renderCart();
+});
 
 renderProducts();
 renderCart();
